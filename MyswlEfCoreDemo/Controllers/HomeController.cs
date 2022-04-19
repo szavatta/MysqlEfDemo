@@ -22,12 +22,12 @@ namespace MyswlEfCoreDemo.Controllers
 
         public IActionResult Index()
         {
-            var optionsBuilder = new DbContextOptionsBuilder<MyDbContext>();
-            optionsBuilder.UseMySQL("server=80.211.158.206;database=stampagadget;uid=sguser2020;password=Ph12345@2020;port=3306;sslmode=None");
-
-            using (MyDbContext ctx = new MyDbContext(optionsBuilder.Options))
+            using (MyDbContext ctx = new MyDbContext())
             {
-                var prodotto = ctx.Prodotto.ToList();
+                var lista = ctx.Prodotto.ToList();
+                var prodotto = lista.FirstOrDefault();
+                prodotto.Descrizione = "Modificato";
+                ctx.SaveChanges();
             }
 
             return View();

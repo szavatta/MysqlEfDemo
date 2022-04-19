@@ -9,12 +9,12 @@ namespace MyswlEfCoreDemo.Data
     public class MyDbContext : DbContext
     {
 
-        public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
+            optionsBuilder.UseMySQL("server=localhost;database=prova;user=root;password=;port=3306");
         }
 
-        public DbSet<Person> Person { get; set; }
+
         public DbSet<Prodotti> Prodotto { get; set; }
 
     }
