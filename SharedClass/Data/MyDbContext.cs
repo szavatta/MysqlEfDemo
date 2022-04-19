@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace MyswlEfCoreDemo.Data
+namespace Context.Data
 {
     public class MyDbContext : DbContext
     {

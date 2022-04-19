@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using MyswlEfCoreDemo.Data;
+using Context.Data;
 using MyswlEfCoreDemo.Models;
 
 namespace MyswlEfCoreDemo.Controllers
