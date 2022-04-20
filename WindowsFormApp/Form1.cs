@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Context.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace WindowsFormApp
 {
@@ -29,6 +30,9 @@ namespace WindowsFormApp
 
         private void button1_Click(object sender, EventArgs e)
         {
+            LeggeUtente();
+            LeggeLocalita();
+
             LeggeLista();
             LeggeUnElemento();
             ModificaUnElemento();
@@ -49,7 +53,23 @@ namespace WindowsFormApp
         {
             using (MyDbContext ctx = new MyDbContext())
             {
-                var item = ctx.Prodotto.Where(q => q.Descrizione.Substring(0,1) == "r").FirstOrDefault();
+                var item = ctx.Prodotto.Where(q => q.Descrizione.Substring(0, 1) == "r").FirstOrDefault();
+            }
+        }
+
+        private void LeggeUtente()
+        {
+            using (MyDbContext ctx = new MyDbContext())
+            {
+                Utente utente = ctx.Utente.Where(q => q.Nome == "Stefano").Include(r => r.Localita).FirstOrDefault();
+            }
+        }
+
+        private void LeggeLocalita()
+        {
+            using (MyDbContext ctx = new MyDbContext())
+            {
+                Localita localita = ctx.Localita.Where(q => q.Nome == "Roma").FirstOrDefault();
             }
         }
 

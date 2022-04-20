@@ -14,8 +14,9 @@ namespace Context.Data
             optionsBuilder.UseMySQL("server=localhost;database=prova;user=root;password=;port=3306");
         }
 
-
         public DbSet<Prodotto> Prodotto { get; set; }
+        public DbSet<Utente> Utente { get; set; }
+        public DbSet<Localita> Localita { get; set; }
 
     }
 }
