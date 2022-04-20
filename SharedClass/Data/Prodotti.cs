@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 namespace Context.Data
 {
     [Table("Prodotti")]
-    public class Prodotti
+    public class Prodotto
     {
         [Key]
         public int id { get; set; }
         public string Descrizione { get; set; }
+        public int Tipo { get; set; }
     }
 }

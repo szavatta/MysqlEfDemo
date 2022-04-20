@@ -15,7 +15,7 @@ namespace Context.Data
         }
 
 
-        public DbSet<Prodotti> Prodotto { get; set; }
+        public DbSet<Prodotto> Prodotto { get; set; }
 
     }
 }
