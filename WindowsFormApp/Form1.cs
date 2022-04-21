@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
+using System.Configuration;using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -14,18 +14,21 @@ namespace WindowsFormApp
 {
     public partial class Form1 : Form
     {
+        private static string connectionString;
+
         public Form1()
         {
+            connectionString = ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            using (MyDbContext ctx = new MyDbContext())
+            using (MyDbContext ctx = new MyDbContext(connectionString))
             {
-                dataGridView1.DataSource = ctx.Prodotto.ToList();
+                dataGridView1.DataSource = ctx.Utente
+                    .Select(q => new { Id = q.id, Nome = q.Nome, Cognome = q.Cognome, Tipo = q.Tipo, Localita = q.Localita.Nome }).ToList();
             }
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -43,7 +46,7 @@ namespace WindowsFormApp
 
         private void LeggeLista()
         {
-            using (MyDbContext ctx = new MyDbContext())
+            using (MyDbContext ctx = new MyDbContext(connectionString))
             {
                 var lista = ctx.Prodotto.Where(q => q.Descrizione.Substring(0, 1) == "r").ToList();
             }
@@ -51,7 +54,7 @@ namespace WindowsFormApp
 
         private void LeggeUnElemento()
         {
-            using (MyDbContext ctx = new MyDbContext())
+            using (MyDbContext ctx = new MyDbContext(connectionString))
             {
                 var item = ctx.Prodotto.Where(q => q.Descrizione.Substring(0, 1) == "r").FirstOrDefault();
             }
@@ -59,15 +62,15 @@ namespace WindowsFormApp
 
         private void LeggeUtente()
         {
-            using (MyDbContext ctx = new MyDbContext())
+            using (MyDbContext ctx = new MyDbContext(connectionString))
             {
-                Utente utente = ctx.Utente.Where(q => q.Nome == "Stefano").FirstOrDefault();
+                Utente utente = ctx.Utente.Include(q => q.Localita).Where(q => q.Nome == "Stefano").FirstOrDefault();
             }
         }
 
         private void LeggeLocalita()
         {
-            using (MyDbContext ctx = new MyDbContext())
+            using (MyDbContext ctx = new MyDbContext(connectionString))
             {
                 Localita localita = ctx.Localita.Where(q => q.Nome == "Roma").FirstOrDefault();
             }
@@ -75,7 +78,7 @@ namespace WindowsFormApp
 
         private void ModificaUnElemento()
         {
-            using (MyDbContext ctx = new MyDbContext())
+            using (MyDbContext ctx = new MyDbContext(connectionString))
             {
                 var item = ctx.Prodotto.Where(q => q.Descrizione.Substring(0, 1) == "r").FirstOrDefault();
                 item.Descrizione = "elemento modificato";
@@ -85,7 +88,7 @@ namespace WindowsFormApp
 
         private void ModificaGlobale()
         {
-            using (MyDbContext ctx = new MyDbContext())
+            using (MyDbContext ctx = new MyDbContext(connectionString))
             {
                 ctx.Prodotto.Where(q => q.Descrizione.Substring(0, 1) == "r").ToList().ForEach(q => q.Tipo = 1);
                 ctx.SaveChanges();
@@ -94,7 +97,7 @@ namespace WindowsFormApp
 
         private void Inserimento()
         {
-            using (MyDbContext ctx = new MyDbContext())
+            using (MyDbContext ctx = new MyDbContext(connectionString))
             {
                 Prodotto p = new Prodotto();
                 p.Descrizione = "Nuovo prodotto";
@@ -106,7 +109,7 @@ namespace WindowsFormApp
 
         private void Cancellazione()
         {
-            using (MyDbContext ctx = new MyDbContext())
+            using (MyDbContext ctx = new MyDbContext(connectionString))
             {
                 var item = ctx.Prodotto.Where(q => q.Descrizione == "Nuovo prodotto").FirstOrDefault();
                 if (item != null)

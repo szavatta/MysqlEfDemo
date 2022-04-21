@@ -8,21 +8,26 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Context.Data;
 using MyswlEfCoreDemo.Models;
+using System.Configuration;
 
 namespace MyswlEfCoreDemo.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private static string connectionString;
+
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            connectionString = ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
+
         }
 
         public IActionResult Index()
         {
-            using (MyDbContext ctx = new MyDbContext())
+            using (MyDbContext ctx = new MyDbContext(connectionString))
             {
                 var lista = ctx.Prodotto.ToList();
                 var prodotto = lista.FirstOrDefault();

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Context.Data;
+using Context;
 
 namespace MyswlEfCoreDemo
 {
@@ -25,7 +26,8 @@ namespace MyswlEfCoreDemo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<MyDbContext>(options => options.UseMySQL(Configuration.GetConnectionString("Stampagadget")));
+            //services.AddDbContext<MyDbContext>(options => options.UseMySQL(Configuration.GetConnectionString("Default")));
+            services.RegisterDataServices(Configuration);
             services.AddControllersWithViews();
         }
 
