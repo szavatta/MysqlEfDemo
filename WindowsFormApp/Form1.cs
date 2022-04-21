@@ -61,7 +61,7 @@ namespace WindowsFormApp
         {
             using (MyDbContext ctx = new MyDbContext())
             {
-                Utente utente = ctx.Utente.Where(q => q.Nome == "Stefano").Include(r => r.Localita).FirstOrDefault();
+                Utente utente = ctx.Utente.Where(q => q.Nome == "Stefano").FirstOrDefault();
             }
         }
 

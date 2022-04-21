@@ -11,7 +11,10 @@ namespace Context.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.UseLazyLoadingProxies();
             optionsBuilder.UseMySQL("server=localhost;database=prova;user=root;password=;port=3306");
+            
+            base.OnConfiguring(optionsBuilder);
         }
 
         public DbSet<Prodotto> Prodotto { get; set; }
