@@ -14,6 +14,7 @@ namespace Context.Data
         public int id { get; set; }
         public string Nome { get; set; }
         public string Cognome { get; set; }
+        public DateTime? DataNascita { get; set; }
         public int Tipo { get; set; }
         [Display(Name = "Localita")]
         public int IdLocalita { get; set; }
